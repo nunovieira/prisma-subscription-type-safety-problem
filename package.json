@@ -1,0 +1,36 @@
+{
+  "name": "prisma-subscription-type-safety-problem",
+  "version": "1.0.0",
+  "description": "just an issue reproduction repo",
+  "main": "main.js",
+  "scripts": {
+    "start": "dotenv -- nodemon -e ts,graphql -x ts-node main.ts",
+    "playground": "graphql playground",
+    "dev": "npm-run-all --parallel start playground",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nunovieira/prisma-subscription-type-safety-problem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nunovieira/prisma-subscription-type-safety-problem/issues"
+  },
+  "homepage": "https://github.com/nunovieira/prisma-subscription-type-safety-problem#readme",
+  "dependencies": {
+    "graphql": "^0.13.2",
+    "prisma-binding": "^2.1.6",
+    "prisma-client-lib": "^1.18.0",
+    "tslib": "^1.9.3"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^1.4.0",
+    "nodemon": "^1.18.4",
+    "npm-run-all": "^4.1.3",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.3"
+  }
+}
