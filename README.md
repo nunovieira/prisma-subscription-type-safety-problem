@@ -10,13 +10,14 @@ prisma deploy
 npm run dev
 ```
 
-App crashes.
+App crashes on `resultValue.user`.
 
-Now comment the line with `console.log('x.user', x.user)`.
+Now, in `main.ts`, comment line 39: `console.log('resultValue.user', resultValue.user)`.
 
-Code works.
+Code works!
+`resultValue` and `resultValueAsAnyType` where created from similar attributions, except `resultValueAsAnyType` is declared as being any type.
 
-## Example mutation
+In Graphql Playground, execute a mutation to get a subscription event, e.g.:
 
 ```graphql
 mutation {

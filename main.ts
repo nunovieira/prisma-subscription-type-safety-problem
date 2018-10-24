@@ -20,32 +20,38 @@ prisma.subscription.user({}, selectionSet).then(subscription => handler(subscrip
 const handler = async (subscription: AsyncIterator<UserSubscriptionPayload>) => {
   console.log('wait for an event...')
 
+  /**
+   * subscription.next() returns Promise<IteratorResult<UserSubscriptionPayload>>
+   * result will be of type IteratorResult<UserSubscriptionPayload>
+   */
   const result = await subscription.next()
   console.log('result', result)
 
-  const x = result.value
-  console.log('x.mutation', x.mutation)           // undefined
-  console.log('x.node', x.node)                   // undefined
-  console.log('x.updatedFields', x.updatedFields) // undefined
   /**
-   * the next line gives an error, because x is of type UserSubscriptionPayload
-   * comment it to work
+   * result.value is of type UserSubscriptionPayload
+   * resultValue will be of type UserSubscriptionPayload
+   * resultValue.user will throw an error, because user does not exist in UserSubscriptionPayload
    */
-  console.log('x.user', x.user)                // error TS2339: Property 'user' does not exist on type 'UserSubscriptionPayload'.
-
-  const y: any = result.value
-  console.log('y.mutation', y.mutation)           // undefined
-  console.log('y.node', y.node)                   // undefined
-  console.log('y.updatedFields', y.updatedFields) // undefined
+  const resultValue = result.value
   /**
-   * the next line works, because y is of type any
+   * ⚠️ comment next line to work
    */
-  console.log('y.user', y.user)                   // 👍 this is UserSubscriptionPayload
+  console.log('resultValue.user', resultValue.user) // error TS2339: Property 'user' does not exist on type 'UserSubscriptionPayload'.
 
-  const z = y.user
-  console.log('z.mutation', z.mutation)           // 👍
-  console.log('z.node', z.node)                   // 👍
-  console.log('z.updatedFields', z.updatedFields) // 👍
+  /**
+   * similar attribution as above, but declaring as type any
+   */
+  const resultValueAsAnyType: any = result.value
+  /**
+   * the next line works, because resultValueAsAnyType is of type any
+   */
+  console.log('resultValueAsAnyType.user', resultValueAsAnyType.user) // 👍 this is UserSubscriptionPayload
+
+
+  const user = resultValueAsAnyType.user
+  console.log('user.mutation', user.mutation)           // 👍
+  console.log('user.node', user.node)                   // 👍
+  console.log('user.updatedFields', user.updatedFields) // 👍
 
   if (!result.done) {
     handler(subscription)
