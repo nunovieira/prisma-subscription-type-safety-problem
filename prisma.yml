@@ -1,14 +1,6 @@
 endpoint: ${env:PRISMA_ENDPOINT}
 datamodel: datamodel.prisma
-
-generate:
-  - generator: typescript-client
-    output: ./generated/prisma
-  - generator: graphql-schema
-    output: ./generated/prisma
-
 hooks:
   post-deploy:
-    - prisma generate
     - graphql get-schema --project database
     - graphql codegen
